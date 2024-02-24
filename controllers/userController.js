@@ -95,9 +95,9 @@ const userDelete = async (req, res) => {
 // Login
 const userLogin = async (req, res) => {
     
-    const result = await User.findOne({ username: req.body.username })
+    const result = await User.findOne({ where: { username: req.body.username }})
     
-    if( result || bcrypt.compareSync( req.body.password, result.password )) {
+    if( result && bcrypt.compareSync( req.body.password, result.password )) {
         
         const token = jwt.sign({
             auth: {
@@ -111,10 +111,26 @@ const userLogin = async (req, res) => {
     }
 }
 
+const verifyToken = (req, res, next) => {
+    const token = req.headers.authorization;
+    
+    if (!token) {
+        return res.status(401).json({ message: 'No token provided' });
+    }
+
+    jwt.verify(token, process.env.SECRET, (err, decoded) => {
+        if (err) {
+            return res.status(403).json({ message: 'Failed to authenticate token' });
+        }
+        return res.status(200).json({ message: 'Token is valid!', userId: decoded.auth.id });
+    });
+};
+
 module.exports = {
     userDelete,
     userUpdate,
     userList,
     userCreate,
-    userLogin
+    userLogin,
+    verifyToken
 }

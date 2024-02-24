@@ -16,4 +16,7 @@ router.post('/login', userController.userLogin)
 // Delete
 router.post('/delete', userController.userDelete)
 
+// Verify token
+router.get('/verifytoken', userController.verifyToken )
+
 module.exports = router
