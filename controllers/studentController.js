@@ -21,7 +21,7 @@ const createStudent = async (req, res) => {
 
 const getStudents = async (req, res) => {
     try{
-        const students = await Student.findAll()
+        const students = await Student.findAll({ where: {active: 1}})
         res.json( students )
     } catch ( e ) {
         console.log("Error fetching student:", e)
@@ -29,7 +29,7 @@ const getStudents = async (req, res) => {
     }
 }
 
-const getStudentById = async (req, res) => {
+const getStudentByParams = async (req, res) => {
     try{
 
         const where = helper.buildQuery( req.query )
@@ -42,8 +42,84 @@ const getStudentById = async (req, res) => {
     }
 }
 
+const getStudentById = async (req, res) => {
+    try{
+
+        const { id } = req.params
+
+        const student = await Student.findByPk( id )
+        res.json( student )
+
+    } catch ( e ) {
+        console.log("Error searching student:", e)
+        res.status(500).json({ error: 'Error searching student'})
+    }
+}
+
+const updateStudent = async (req, res) => {
+    /* #swagger.security = [{
+        "apiKeyAuth": []
+    }] */
+    try {
+        
+        const { id } = req.params
+        const { name, email, cpf, ra, active } = req.body
+
+        const result = await Student.update(
+            { name, email, ra, cpf, active },
+            { where: { id }, returning: true }
+        )
+        
+        const rowsUpdated = result[1]
+
+        if ( rowsUpdated === 0 ) {
+            return res.status(404).json({ error: 'Student not found' });
+        }
+
+        const updatedStudent = await Student.findByPk(id)
+
+        res.json({ updatedStudent });
+
+    } catch ( e ) {
+        console.log("Error updating students:", e)
+        res.status(500).json({ error: 'Error updating students'})
+    }
+}
+
+const deleteStudent = async (req, res) => {
+    /* #swagger.security = [{
+        "apiKeyAuth": []
+    }] */
+    try {
+        
+        const { id } = req.params
+        
+        const result = await Student.update(
+            { active: 0 },
+            { where: { id }, returning: true }
+        )
+        
+        const rowsUpdated = result[1]
+
+        if ( rowsUpdated === 0 ) {
+            return res.status(404).json({ error: 'Student not found' });
+        }
+
+        const updatedStudent = await Student.findByPk(id)
+
+        res.json({ updatedStudent });
+
+    } catch ( e ) {
+        console.log("Error updating students:", e)
+        res.status(500).json({ error: 'Error updating students'})
+    }
+}
+
 module.exports = { 
     createStudent,
     getStudents,
-    getStudentById
+    getStudentById,
+    getStudentByParams,
+    updateStudent,
+    deleteStudent
 }

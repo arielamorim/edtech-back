@@ -22,6 +22,11 @@ const Student = sequelize.define('Student', {
     cpf: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    active: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: 1
     }
 }, {
     tableName: 'students'

@@ -14,7 +14,7 @@ router.post('/create', userController.userCreate)
 router.post('/login', userController.userLogin)
 
 // Delete
-router.post('/delete', userController.userDelete)
+router.post('/delete/:id', userController.userDelete)
 
 // Verify token
 router.get('/verifytoken', userController.verifyToken )
