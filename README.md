@@ -9,4 +9,4 @@ Para testar a aplicação é necessário:
 
 Feito isso, já é possível acessar os endpoints. 
 A definição do uso do sistema está documentada através do Swagger:
-```http://localhost:3000/api-docs/```
+```http://localhost:4033/api-docs/```
