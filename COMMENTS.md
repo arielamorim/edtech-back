@@ -19,3 +19,6 @@ Caso tivesse mais tempo, adicionaria:
 - paginação nas consultas
 - validações de DTO
 - testes unitários
+
+
+Disponibilizei o arquivo "docker-compose.yml" com mysql e phpmyadmin para que o projeto tenha um banco de dados ao rodar.
