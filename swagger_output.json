@@ -7,7 +7,6 @@
   },
   "host": "localhost:3000",
   "basePath": "/",
-  "tags": [],
   "schemes": [
     "http"
   ],
@@ -19,96 +18,71 @@
       "description": "Token gerado pelo login"
     }
   },
-  "consumes": [],
-  "produces": [],
   "paths": {
-    "/users/": {
-      "get": {
-        "tags": [],
-        "description": "",
-        "parameters": [],
-        "responses": {},
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ]
-      }
-    },
-    "/users/create": {
+    "/student/create": {
       "post": {
-        "tags": [],
         "description": "",
         "parameters": [
           {
-            "name": "obj",
+            "name": "body",
             "in": "body",
             "schema": {
               "type": "object",
               "properties": {
-                "userPass": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {}
-      }
-    },
-    "/users/login": {
-      "post": {
-        "tags": [],
-        "description": "",
-        "parameters": [
-          {
-            "name": "obj",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "userLogin": {
+                "name": {
                   "example": "any"
                 },
-                "userPass": {
+                "email": {
+                  "example": "any"
+                },
+                "cpf": {
+                  "example": "any"
+                },
+                "ra": {
                   "example": "any"
                 }
               }
             }
           }
         ],
-        "responses": {}
-      }
-    },
-    "/movies/create": {
-      "post": {
-        "tags": [],
-        "description": "",
-        "parameters": [],
-        "responses": {},
-        "security": [
-          {
-            "apiKeyAuth": []
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
-        ]
+        }
       }
     },
-    "/movies/": {
+    "/student/": {
       "get": {
-        "tags": [],
         "description": "",
-        "parameters": [],
-        "responses": {},
-        "security": [
-          {
-            "apiKeyAuth": []
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
-        ]
+        }
       }
     },
-    "/movies/{id}": {
-      "delete": {
-        "tags": [],
+    "/student/search": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/student/{id}": {
+      "get": {
         "description": "",
         "parameters": [
           {
@@ -119,32 +93,44 @@
           }
         ],
         "responses": {
-          "201": {
-            "description": "Created"
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
-        },
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ]
+        }
       }
     },
-    "/movies/update": {
+    "/student/update/{id}": {
       "put": {
-        "tags": [],
         "description": "",
         "parameters": [
           {
-            "name": "obj",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
             "in": "body",
             "schema": {
               "type": "object",
               "properties": {
-                "id": {
+                "name": {
                   "example": "any"
                 },
-                "update": {
+                "email": {
+                  "example": "any"
+                },
+                "cpf": {
+                  "example": "any"
+                },
+                "ra": {
+                  "example": "any"
+                },
+                "active": {
                   "example": "any"
                 }
               }
@@ -154,6 +140,12 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         },
         "security": [
@@ -163,35 +155,8 @@
         ]
       }
     },
-    "/rents/create": {
+    "/student/delete/{id}": {
       "post": {
-        "tags": [],
-        "description": "",
-        "parameters": [],
-        "responses": {},
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ]
-      }
-    },
-    "/rents/": {
-      "get": {
-        "tags": [],
-        "description": "",
-        "parameters": [],
-        "responses": {},
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ]
-      }
-    },
-    "/rents/{id}": {
-      "delete": {
-        "tags": [],
         "description": "",
         "parameters": [
           {
@@ -201,7 +166,17 @@
             "type": "string"
           }
         ],
-        "responses": {},
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
         "security": [
           {
             "apiKeyAuth": []
@@ -209,21 +184,65 @@
         ]
       }
     },
-    "/rents/update": {
-      "put": {
-        "tags": [],
+    "/user/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/user/create": {
+      "post": {
         "description": "",
         "parameters": [
           {
-            "name": "obj",
+            "name": "body",
             "in": "body",
             "schema": {
               "type": "object",
               "properties": {
-                "id": {
+                "password": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/user/login": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
                   "example": "any"
                 },
-                "update": {
+                "password": {
                   "example": "any"
                 }
               }
@@ -234,6 +253,30 @@
           "200": {
             "description": "OK"
           }
+        }
+      }
+    },
+    "/user/delete/{id}": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
         },
         "security": [
           {
@@ -242,39 +285,28 @@
         ]
       }
     },
-    "/rents/rentEnd": {
-      "put": {
-        "tags": [],
+    "/user/verifytoken": {
+      "get": {
         "description": "",
         "parameters": [
           {
-            "name": "obj",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "data": {
-                  "example": "any"
-                },
-                "id": {
-                  "example": "any"
-                }
-              }
-            }
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
           }
-        },
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ]
+        }
       }
     }
-  },
-  "definitions": {}
+  }
 }
